@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hệ thống đặt vé sự kiện</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: 30px auto; padding: 0 16px; color: #172033; }
+    .card { border: 1px solid #dce3ed; border-radius: 10px; padding: 16px; margin: 12px 0; }
+    input, button { font-size: 16px; padding: 8px; margin: 4px 0; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Hệ thống đặt vé sự kiện</h1>
+  <p><a href="/swagger">Xem tài liệu API Swagger</a></p>
+  <section id="events"></section>
+  <script>
+    async function loadEvents() {
+      const events = await fetch('/events').then(r => r.json());
+      document.getElementById('events').innerHTML = events.map(e => `
+        <div class="card">
+          <h3>${e.name}</h3>
+          <p>${e.description}</p>
+          <p>Còn lại: <b>${e.availableTickets}</b> / ${e.capacity}</p>
+          <input id="user-${e.id}" placeholder="User ID" value="user01">
+          <input id="qty-${e.id}" type="number" min="1" value="1">
+          <button onclick="book('${e.id}')">Đặt vé</button>
+        </div>`).join('');
+    }
+    async function book(eventId) {
+      const userId = document.getElementById(`user-${eventId}`).value;
+      const quantity = Number(document.getElementById(`qty-${eventId}`).value);
+      const response = await fetch('/bookings', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({eventId, userId, quantity})
+      });
+      const data = await response.json();
+      alert(response.ok ? `Đặt vé thành công. Mã booking: ${data.id}` : JSON.stringify(data));
+      loadEvents();
+    }
+    loadEvents();
+  </script>
+</body>
+</html>

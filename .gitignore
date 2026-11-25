@@ -4,3 +4,6 @@
 *.suo
 .vs/
 .vscode/
+*.db
+*.db-shm
+*.db-wal
