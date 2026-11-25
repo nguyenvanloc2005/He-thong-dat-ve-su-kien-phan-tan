@@ -15,6 +15,7 @@ Client/Web UI -> Ticket API -> SQLite
 - Booking Worker xử lý yêu cầu bất đồng bộ và cập nhật trạng thái.
 - SQLite được chia sẻ qua Docker volume để API và worker dùng cùng dữ liệu.
 - RabbitMQ dùng queue `booking.requests` với message persistent.
+- Giao diện web responsive cho phép tìm kiếm sự kiện, đặt vé và tra cứu trạng thái vé theo người dùng.
 
 ## API
 
