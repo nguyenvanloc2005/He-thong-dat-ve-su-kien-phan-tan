@@ -78,7 +78,20 @@ Terminal 2:
 dotnet run --project backend/BookingWorker/BookingWorker.csproj
 ```
 
-API chạy tại địa chỉ được ghi trong console, mặc định URL cấu hình của ASP.NET Core khi chạy development.
+Terminal 3:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend chạy tại `http://127.0.0.1:5173` và proxy API đến `http://127.0.0.1:5080`.
+API local cần chạy với cổng `5080`, ví dụ:
+
+```powershell
+dotnet run --project backend/TicketApi/TicketApi.csproj --urls http://127.0.0.1:5080
+```
 
 ## Build kiểm tra
 
