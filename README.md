@@ -5,13 +5,14 @@ Hệ thống đặt vé sự kiện phân tán bằng .NET 10, ASP.NET Core Mini
 ## Kiến trúc
 
 ```text
-Client/Web UI -> Ticket API -> SQLite
+Browser -> Frontend (Nginx) -> Ticket API -> SQLite
                      |
                      v
                   RabbitMQ -> Booking Worker -> SQLite
 ```
 
-- Ticket API cung cấp các endpoint REST tối thiểu và giao diện đặt vé.
+- Frontend là project web tách biệt trong thư mục `frontend/`.
+- Ticket API cung cấp các endpoint REST tối thiểu.
 - Booking Worker xử lý yêu cầu bất đồng bộ và cập nhật trạng thái.
 - SQLite được chia sẻ qua Docker volume để API và worker dùng cùng dữ liệu.
 - RabbitMQ dùng queue `booking.requests` với message persistent.

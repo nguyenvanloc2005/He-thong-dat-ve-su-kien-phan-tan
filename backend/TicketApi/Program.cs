@@ -47,8 +47,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI();
 
